@@ -8,23 +8,23 @@
 
   <style>
     :root{
-      --navy:#0b1017;
-      --navy2:#06122a;
-      --card:#0f1a2a;
-      --card2:#0c1523;
+      --bg:#070b12;
+      --panel:#0c1422;
+      --panel2:#0a111d;
+
       --text:rgba(255,255,255,.94);
       --muted:rgba(255,255,255,.72);
       --muted2:rgba(255,255,255,.56);
 
       --gold:#FBC909;
       --teal:#3AADBB;
-      --red:#ff3b30;
       --green:#34c759;
+      --red:#ff3b30;
 
       --grad: linear-gradient(135deg, var(--gold), var(--teal));
-      --shadow: 0 18px 60px rgba(0,0,0,.45);
-      --r:16px;
-      --r2:22px;
+      --shadow: 0 18px 70px rgba(0,0,0,.55);
+      --r:18px;
+      --r2:26px;
 
       --safeT: env(safe-area-inset-top);
       --safeB: env(safe-area-inset-bottom);
@@ -39,218 +39,239 @@
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       color:var(--text);
       background:
-        radial-gradient(1200px 600px at 20% -10%, rgba(251,201,9,.18), transparent 55%),
-        radial-gradient(900px 600px at 110% 10%, rgba(58,173,187,.18), transparent 55%),
-        linear-gradient(180deg, var(--navy), #050a12);
-      padding: calc(18px + var(--safeT)) calc(16px + var(--safeR)) calc(26px + var(--safeB)) calc(16px + var(--safeL));
+        radial-gradient(1200px 700px at 15% -10%, rgba(251,201,9,.20), transparent 55%),
+        radial-gradient(900px 650px at 110% 15%, rgba(58,173,187,.18), transparent 55%),
+        linear-gradient(180deg, var(--bg), #05070c);
+      padding: calc(16px + var(--safeT)) calc(14px + var(--safeR)) calc(22px + var(--safeB)) calc(14px + var(--safeL));
     }
 
-    .wrap{max-width:980px;margin:0 auto}
-    .top{
-      display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+    .wrap{max-width:1100px;margin:0 auto}
+
+    /* Header */
+    .header{
+      display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;
       margin-bottom:14px;
     }
-    .brand{
+    .titleRow{
       display:flex;align-items:center;gap:12px;
     }
-    .logo{
-      width:44px;height:44px;border-radius:14px;
+    .mark{
+      width:48px;height:48px;border-radius:18px;
       background: var(--grad);
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      box-shadow: 0 14px 40px rgba(0,0,0,.45);
       position:relative;overflow:hidden;
+      flex:0 0 auto;
     }
-    .logo:after{
+    .mark:after{
       content:"";
-      position:absolute;inset:-40%;
-      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.45), transparent 55%);
+      position:absolute;inset:-45%;
+      background: radial-gradient(circle at 30% 25%, rgba(255,255,255,.50), transparent 55%);
       transform: rotate(20deg);
     }
     h1{
       margin:0;
-      font-size: clamp(20px, 3.6vw, 34px);
-      letter-spacing:.2px;
-      line-height:1.1;
+      font-size: clamp(22px, 3.8vw, 38px);
+      letter-spacing:.3px;
+      line-height:1.05;
     }
     .sub{
+      margin-top:6px;
       color:var(--muted);
-      margin:4px 0 0 0;
       font-size:14px;
+      line-height:1.35;
     }
 
-    .pillRow{display:flex;gap:10px;flex-wrap:wrap}
-    .pill{
+    .chipRow{display:flex;gap:10px;flex-wrap:wrap}
+    .chip{
       display:inline-flex;align-items:center;gap:8px;
       padding:10px 12px;
       border-radius:999px;
       background: rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.10);
-      box-shadow: 0 10px 24px rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow: 0 10px 24px rgba(0,0,0,.20);
       backdrop-filter: blur(10px);
-      font-weight:600;
+      font-weight:800;
       font-size:13px;
       color: var(--text);
       user-select:none;
     }
-    .pill .dot{width:10px;height:10px;border-radius:999px;background:var(--gold);box-shadow:0 0 0 4px rgba(251,201,9,.14)}
-    .pill.green .dot{background:var(--green);box-shadow:0 0 0 4px rgba(52,199,89,.14)}
-    .pill.red .dot{background:var(--red);box-shadow:0 0 0 4px rgba(255,59,48,.14)}
-    .pill.teal .dot{background:var(--teal);box-shadow:0 0 0 4px rgba(58,173,187,.14)}
+    .dot{width:10px;height:10px;border-radius:999px;background:var(--gold);box-shadow:0 0 0 4px rgba(251,201,9,.14)}
+    .dot.teal{background:var(--teal);box-shadow:0 0 0 4px rgba(58,173,187,.14)}
+    .dot.green{background:var(--green);box-shadow:0 0 0 4px rgba(52,199,89,.14)}
 
+    /* Layout */
     .grid{
       display:grid;
       grid-template-columns: 1.15fr .85fr;
       gap:14px;
-      margin-top:14px;
     }
-    @media (max-width: 860px){
+    @media (max-width: 920px){
       .grid{grid-template-columns:1fr}
     }
 
     .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
       border:1px solid rgba(255,255,255,.10);
       border-radius: var(--r2);
       box-shadow: var(--shadow);
       overflow:hidden;
     }
-    .card .hd{
+    .hd{
       padding:16px 16px 12px 16px;
       border-bottom:1px solid rgba(255,255,255,.08);
       display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;
     }
-    .card .hd h2{
+    .bd{padding:14px 16px 16px 16px}
+
+    .h2{
       margin:0;
-      font-size:18px;
-      letter-spacing:.2px;
+      font-size:16px;
+      letter-spacing:.35px;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.88);
     }
-    .card .bd{padding:14px 16px 16px 16px}
-
-    .bigPrize{
-      display:flex;align-items:center;gap:12px;flex-wrap:wrap;
-    }
-    .prizeBadge{
-      padding:10px 12px;
-      border-radius: 14px;
-      background: var(--grad);
-      color:#06122a;
-      font-weight:900;
-      letter-spacing:.4px;
-      box-shadow: 0 14px 40px rgba(0,0,0,.35);
-    }
-    .countdown{
-      font-variant-numeric: tabular-nums;
-      display:flex;gap:10px;flex-wrap:wrap;
-    }
-    .timeBox{
-      background: rgba(0,0,0,.22);
-      border:1px solid rgba(255,255,255,.10);
-      border-radius: 14px;
-      padding:10px 12px;
-      min-width:92px;
-      text-align:center;
-    }
-    .timeBox .num{font-size:20px;font-weight:900;line-height:1}
-    .timeBox .lab{font-size:12px;color:var(--muted);margin-top:4px}
-
-    .ruleList{
-      margin:0;padding:0;list-style:none;
-      display:flex;flex-direction:column;gap:10px;
-    }
-    .rule{
-      display:flex;gap:10px;align-items:flex-start;
-      padding:12px 12px;
-      border-radius: var(--r);
-      background: rgba(0,0,0,.18);
-      border:1px solid rgba(255,255,255,.10);
-    }
-    .ico{
-      width:28px;height:28px;border-radius:10px;
-      display:grid;place-items:center;
-      background: rgba(251,201,9,.16);
-      border:1px solid rgba(251,201,9,.25);
-      flex: 0 0 auto;
-    }
-    .ico.teal{background: rgba(58,173,187,.16); border-color: rgba(58,173,187,.25)}
-    .ico.red{background: rgba(255,59,48,.14); border-color: rgba(255,59,48,.22)}
-    .ico.green{background: rgba(52,199,89,.14); border-color: rgba(52,199,89,.22)}
-    .rule b{display:block;margin-bottom:2px}
-    .rule span{color:var(--muted);font-size:14px;line-height:1.35}
-
     .tag{
       display:inline-flex;align-items:center;gap:6px;
       border-radius:999px;
-      padding:6px 10px;
+      padding:7px 10px;
       background: rgba(255,255,255,.06);
       border:1px solid rgba(255,255,255,.10);
       color:var(--muted);
       font-size:12px;
       white-space:nowrap;
-    }
-
-    .callout{
-      margin-top:12px;
-      padding:12px 12px;
-      border-radius: var(--r);
-      background: rgba(251,201,9,.10);
-      border:1px solid rgba(251,201,9,.25);
-      color: rgba(255,255,255,.92);
-    }
-    .callout b{color:#fff}
-    .small{color:var(--muted2);font-size:12px;line-height:1.4;margin-top:10px}
-    .footer{
-      margin-top:14px;
-      display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;
-      color:var(--muted2);font-size:12px;
-    }
-    a{color:inherit}
-    .btn{
-      display:inline-flex;align-items:center;gap:10px;
-      padding:10px 12px;
-      border-radius: 14px;
-      background: rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.12);
-      text-decoration:none;
-      color:var(--text);
       font-weight:700;
     }
-    .btn:hover{background: rgba(255,255,255,.09)}
-    .btn .bolt{
-      width:28px;height:28px;border-radius:10px;
-      background: var(--grad);
+
+    /* Scoreboard */
+    .scoreGrid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:10px;
+      margin-top:8px;
+    }
+    @media (max-width: 520px){
+      .scoreGrid{grid-template-columns:1fr}
+    }
+    .scoreBox{
+      border-radius: var(--r);
+      background: rgba(0,0,0,.22);
+      border:1px solid rgba(255,255,255,.10);
+      padding:12px 12px;
+      position:relative;
+      overflow:hidden;
+    }
+    .scoreBox:after{
+      content:"";
+      position:absolute;inset:-60%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.07), transparent 60%);
+      transform: rotate(18deg);
+      pointer-events:none;
+    }
+    .scoreBox .k{
+      color:var(--muted2);
+      font-size:11px;
+      letter-spacing:.35px;
+      text-transform:uppercase;
+      font-weight:900;
+    }
+    .scoreBox .v{
+      margin-top:6px;
+      font-size:26px;
+      font-weight:1000;
+      letter-spacing:.2px;
+      font-variant-numeric: tabular-nums;
+      line-height:1.05;
+    }
+    .scoreBox.win .v{ color: var(--gold); }
+    .scoreBox.team .v{ color: var(--teal); }
+    .scoreBox.points .v{ color: rgba(255,255,255,.94); }
+
+    /* Countdown */
+    .countdown{
+      display:flex;gap:10px;flex-wrap:wrap;
+      font-variant-numeric: tabular-nums;
+    }
+    .timeBox{
+      border-radius: var(--r);
+      background: rgba(0,0,0,.22);
+      border:1px solid rgba(255,255,255,.10);
+      padding:10px 12px;
+      min-width: 92px;
+      text-align:center;
+    }
+    .timeBox .num{font-size:20px;font-weight:1000;line-height:1}
+    .timeBox .lab{font-size:11px;color:var(--muted2);margin-top:5px;letter-spacing:.25px;text-transform:uppercase;font-weight:900}
+
+    /* Rules: clean blocks */
+    .ruleBlocks{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+      margin-top:10px;
+    }
+    @media (max-width: 820px){
+      .ruleBlocks{grid-template-columns:1fr}
+    }
+    .block{
+      border-radius: var(--r);
+      background: rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.10);
+      padding:12px 12px;
+    }
+    .block b{
+      display:flex;align-items:center;gap:8px;
+      font-weight:1000;
+      letter-spacing:.2px;
+      margin-bottom:6px;
+    }
+    .icon{
+      width:26px;height:26px;border-radius:10px;
       display:grid;place-items:center;
-      color:#06122a;font-weight:900;
+      background: rgba(251,201,9,.14);
+      border:1px solid rgba(251,201,9,.22);
+      flex:0 0 auto;
+    }
+    .icon.teal{ background: rgba(58,173,187,.14); border-color: rgba(58,173,187,.22); }
+    .icon.green{ background: rgba(52,199,89,.14); border-color: rgba(52,199,89,.22); }
+    .icon.red{ background: rgba(255,59,48,.12); border-color: rgba(255,59,48,.20); }
+
+    .block p{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.35;
     }
 
-    /* Leaderboard */
-    .lb{
+    /* Definition row */
+    .defs{
       display:flex;
       flex-direction:column;
       gap:10px;
       margin-top:12px;
     }
-    .lbRow{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding:12px 12px;
+    .line{
       border-radius: var(--r);
       background: rgba(0,0,0,.18);
       border:1px solid rgba(255,255,255,.10);
+      padding:12px 12px;
+      display:flex;align-items:flex-start;gap:10px;
     }
-    .lbLeft{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      min-width: 0;
+    .line b{display:block;margin-bottom:3px}
+    .line span{color:var(--muted);font-size:14px;line-height:1.35}
+
+    /* Leaderboard */
+    .lb{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+    .lbRow{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      padding:12px 12px;border-radius: var(--r);
+      background: rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.10);
     }
+    .lbLeft{display:flex;align-items:center;gap:10px;min-width:0}
     .rank{
-      width:36px;
-      height:36px;
-      border-radius:12px;
-      display:grid;
-      place-items:center;
-      font-weight:900;
+      width:38px;height:38px;border-radius:14px;
+      display:grid;place-items:center;
+      font-weight:1000;
       color:#06122a;
       background: rgba(255,255,255,.10);
       border:1px solid rgba(255,255,255,.14);
@@ -258,24 +279,24 @@
     }
     .rank.gold{ background: var(--grad); border-color: rgba(251,201,9,.35); }
     .rank.silver{ background: rgba(255,255,255,.22); }
-    .rank.bronze{ background: rgba(251,201,9,.14); border-color: rgba(251,201,9,.25); color: var(--text); }
+    .rank.bronze{ background: rgba(251,201,9,.14); border-color: rgba(251,201,9,.22); color: var(--text); }
 
     .avatar{
-      width:42px;height:42px;border-radius:14px;
+      width:44px;height:44px;border-radius:16px;
       background: rgba(255,255,255,.08);
       border:1px solid rgba(255,255,255,.12);
       display:grid;place-items:center;
-      font-weight:900;
-      flex: 0 0 auto;
+      font-weight:1000;
+      flex:0 0 auto;
     }
     .name{
-      font-weight:900;
+      font-weight:1000;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
     }
     .note{
-      color: var(--muted);
+      color:var(--muted2);
       font-size:12px;
       margin-top:2px;
       white-space:nowrap;
@@ -283,64 +304,79 @@
       text-overflow:ellipsis;
       max-width: 520px;
     }
-    .lbRight{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-      text-align:right;
-    }
+    .lbRight{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;text-align:right}
     .metric{
-      padding:8px 10px;
-      border-radius: 14px;
+      padding:8px 10px;border-radius:14px;
       background: rgba(255,255,255,.06);
       border:1px solid rgba(255,255,255,.10);
-      min-width: 92px;
+      min-width: 108px;
     }
-    .metric .v{
+    .metric .v{font-weight:1000;font-variant-numeric:tabular-nums}
+    .metric .k{color:var(--muted2);font-size:11px;margin-top:2px;letter-spacing:.25px;text-transform:uppercase;font-weight:900}
+    .metric.win{background: rgba(251,201,9,.10); border-color: rgba(251,201,9,.22);}
+
+    /* Buttons */
+    .btnRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    .btn{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:10px 12px;border-radius: 16px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      text-decoration:none;color:var(--text);
       font-weight:900;
-      font-variant-numeric: tabular-nums;
     }
-    .metric .k{
-      color: var(--muted2);
-      font-size:11px;
-      margin-top:2px;
+    .btn:hover{background: rgba(255,255,255,.09)}
+    .bolt{
+      width:30px;height:30px;border-radius:12px;
+      background: var(--grad);
+      display:grid;place-items:center;
+      color:#06122a;font-weight:1000;
+      flex:0 0 auto;
     }
-    .metric.win{
-      background: rgba(251,201,9,.10);
-      border-color: rgba(251,201,9,.25);
+
+    .small{color:var(--muted2);font-size:12px;line-height:1.4;margin-top:10px}
+    .foot{
+      margin-top:10px;
+      display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;
+      color:var(--muted2);font-size:12px;
     }
   </style>
 </head>
 
 <body>
   <div class="wrap">
-    <div class="top">
-      <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
-        <div>
-          <h1>$1,000 Qualified Sits Challenge</h1>
-          <div class="sub">Rules + countdown + manual leaderboard (max 8 reps)</div>
+
+    <!-- HEADER -->
+    <div class="header">
+      <div>
+        <div class="titleRow">
+          <div class="mark" aria-hidden="true"></div>
+          <div>
+            <h1>$1,000 Qualified Sits Challenge</h1>
+            <div class="sub">
+              Built for competitors: clear scoring, clean rules, and a manual leaderboard you can update in 30 seconds.
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="pillRow">
-        <div class="pill"><span class="dot"></span> Prize: <span style="color:#fff">$1,000</span></div>
-        <div class="pill teal"><span class="dot"></span> Ends: <span style="color:#fff">March 7 • 8:00 PM</span></div>
-        <div class="pill green"><span class="dot"></span> Team Minimum: <span style="color:#fff">40 Qualified Sits</span></div>
+      <div class="chipRow">
+        <div class="chip"><span class="dot"></span> Prize: <span style="color:#fff">$1,000</span></div>
+        <div class="chip"><span class="dot teal"></span> Ends: <span style="color:#fff">March 7 • 8:00 PM</span></div>
+        <div class="chip"><span class="dot green"></span> Team Minimum: <span style="color:#fff">40 sits</span></div>
       </div>
     </div>
 
     <div class="grid">
-      <!-- LEFT: RULES -->
+      <!-- LEFT: SCORE + RULES -->
       <section class="card">
         <div class="hd">
-          <div class="bigPrize">
-            <div class="prizeBadge">$1,000 WINNER</div>
+          <div>
+            <div class="h2">Scoreboard</div>
             <div class="tag" id="dateTag">Start: Today • End: March 7 @ 8:00 PM</div>
           </div>
 
-          <!-- Countdown: Days / Hours / Minutes -->
+          <!-- Countdown -->
           <div class="countdown" aria-label="Countdown to end date">
             <div class="timeBox"><div class="num" id="d">—</div><div class="lab">Days</div></div>
             <div class="timeBox"><div class="num" id="h">—</div><div class="lab">Hours</div></div>
@@ -349,167 +385,139 @@
         </div>
 
         <div class="bd">
-          <ul class="ruleList">
-            <li class="rule">
-              <div class="ico green">🎯</div>
-              <div>
-                <b>How to Win</b>
-                <span>Most <b>qualified sits</b> during the competition window wins the <b>$1,000</b> prize.</span>
-              </div>
-            </li>
+          <!-- SCORING -->
+          <div class="scoreGrid">
+            <div class="scoreBox points">
+              <div class="k">Scoring</div>
+              <div class="v">1.00</div>
+              <div class="small" style="margin:6px 0 0 0;">Per qualified sit</div>
+            </div>
+            <div class="scoreBox team">
+              <div class="k">Bill Bonus</div>
+              <div class="v">+0.25</div>
+              <div class="small" style="margin:6px 0 0 0;">If bill collected upfront</div>
+            </div>
+            <div class="scoreBox win">
+              <div class="k">Prize</div>
+              <div class="v">$1,000</div>
+              <div class="small" style="margin:6px 0 0 0;">Winner takes it</div>
+            </div>
+          </div>
 
-            <li class="rule">
-              <div class="ico teal">👥</div>
-              <div>
-                <b>Team Minimum (Activation Rule)</b>
-                <span>Prize only pays out if the team hits <b>40 total qualified sits</b> combined. If the team finishes below 40, no payout.</span>
-              </div>
-            </li>
+          <!-- RULES IN 2-COLUMN CLEAN BLOCKS -->
+          <div class="ruleBlocks">
+            <div class="block">
+              <b><span class="icon green">🏆</span>How to Win</b>
+              <p>
+                Highest <b>total points</b> by March 7 @ 8:00 PM wins.
+                <br/>Points = (<b>qualified sits × 1.00</b>) + (<b>bills collected × 0.25</b>)
+              </p>
+            </div>
 
-            <li class="rule">
-              <div class="ico">🔌</div>
+            <div class="block">
+              <b><span class="icon teal">👥</span>Team Minimum</b>
+              <p>
+                Prize pays out only if the team hits <b>40 qualified sits</b> combined.
+                If the team finishes below 40, <b>no payout</b>.
+              </p>
+            </div>
+
+            <div class="block">
+              <b><span class="icon">🔌</span>Bill Minimums</b>
+              <p>
+                <b>Add-on:</b> Annual bill <b>$1,750+</b><br/>
+                <b>Non-solar:</b> Monthly bill <b>$140+</b>
+              </p>
+            </div>
+
+            <div class="block">
+              <b><span class="icon teal">📲</span>Enzy Required</b>
+              <p>
+                All sits must be <b>marked in Enzy</b> and reps must use Enzy <b>on doors at all times</b>.
+                No Enzy entry = <b>doesn’t count</b>.
+              </p>
+            </div>
+
+            <div class="block">
+              <b><span class="icon red">🚫</span>Disqualified</b>
+              <p>
+                <b>Renters</b> • not enough roof space • no decision-maker • canceled/rescheduled • late entries
+              </p>
+            </div>
+
+            <div class="block">
+              <b><span class="icon red">🛑</span>Integrity</b>
+              <p>
+                Any fake sit, bill manipulation, or Enzy fraud = <b>immediate disqualification</b>.
+              </p>
+            </div>
+          </div>
+
+          <!-- DEFINITIONS: SUPER CLEAR -->
+          <div class="defs">
+            <div class="line">
+              <span class="icon green">✅</span>
               <div>
-                <b>Qualified Sit – Bill Minimums</b>
+                <b>Definition: “Qualified Sit”</b>
                 <span>
-                  <b>Add-on appointment:</b> Annual electric bill <b>$1,750+</b><br/>
-                  <b>Non-solar home:</b> Monthly electric bill <b>$140+</b>
+                  Decision-maker present + meets bill minimum + homeowner + buildable roof + logged correctly in Enzy.
                 </span>
               </div>
-            </li>
+            </div>
 
-            <li class="rule">
-              <div class="ico teal">🏠</div>
+            <div class="line">
+              <span class="icon teal">💰</span>
               <div>
-                <b>Qualified Sit – Property Rules</b>
+                <b>Bill Bonus (+0.25)</b>
                 <span>
-                  Must be <b>homeowner</b> (renters do not count).<br/>
-                  Home must have <b>enough roof space</b> to build; unbuildable homes do not count.
+                  Bill must be collected upfront (photo or digital copy) and tied to the sit.
                 </span>
               </div>
-            </li>
+            </div>
 
-            <li class="rule">
-              <div class="ico green">📲</div>
+            <div class="line">
+              <span class="icon">🥇</span>
               <div>
-                <b>Enzy Required (No Exceptions)</b>
+                <b>Tie-Breaker</b>
                 <span>
-                  All sits must be <b>marked in Enzy</b> and reps must <b>use Enzy on doors at all times</b>.<br/>
-                  No Enzy entry = <b>sit does not count</b>.
+                  If points tie: <b>most sits converted to sales</b> wins.
+                  If still tied: management decision / total kW (optional).
                 </span>
               </div>
-            </li>
-
-            <li class="rule">
-              <div class="ico">💰</div>
-              <div>
-                <b>Bill Collection Bonus</b>
-                <span>
-                  Small bonus for collecting the utility bill <b>upfront</b> (photo or digital copy).<br/>
-                  Bonus amount set by management.
-                </span>
-              </div>
-            </li>
-
-            <li class="rule">
-              <div class="ico red">🚫</div>
-              <div>
-                <b>What Does NOT Count</b>
-                <span>
-                  Renters • not enough roof space • no decision-maker • canceled/rescheduled • late entries • inaccurate Enzy logs.
-                </span>
-              </div>
-            </li>
-
-            <li class="rule">
-              <div class="ico red">🛑</div>
-              <div>
-                <b>Integrity Rule</b>
-                <span>Any falsification of sits, bills, or Enzy entries = <b>immediate disqualification</b>.</span>
-              </div>
-            </li>
-
-            <li class="rule">
-              <div class="ico green">🥇</div>
-              <div>
-                <b>Tie Breaker</b>
-                <span><b>Most sits converted to sales</b> wins. (Optional secondary tie-breaker: total kW sold.)</span>
-              </div>
-            </li>
-          </ul>
-
-          <div class="callout">
-            <b>Cutoff Rule:</b> Sits must be <b>completed + logged</b> by <b>March 7 @ 8:00 PM</b>. Late sits won’t count.
+            </div>
           </div>
 
           <div class="small">
-            *Management reserves the right to verify homeownership, bill amounts, roof viability, and Enzy accuracy to prevent disputes.
+            *Management reserves the right to verify homeownership, bill amounts, roof viability, and Enzy accuracy.
           </div>
-
-          <!-- LEADERBOARD (Manual) -->
-          <section class="card" style="margin-top:14px;">
-            <div class="hd">
-              <h2>Leaderboard (Manual)</h2>
-              <span class="tag">Max 8 reps • Edit the code to update</span>
-            </div>
-
-            <div class="bd">
-              <div class="callout" style="margin-top:0;">
-                <b>Ranking:</b> Qualified sits (highest) • <b>Tie-breaker:</b> sales conversions
-              </div>
-
-              <div class="lb" id="lb"></div>
-
-              <div class="small">
-                To update: edit the <b>LEADERBOARD_DATA</b> list at the bottom of this file, then commit to GitHub.
-              </div>
-            </div>
-          </section>
         </div>
       </section>
 
-      <!-- RIGHT: QUICK SHARE / PRINT -->
+      <!-- RIGHT: LEADERBOARD + QUICK ACTIONS -->
       <aside class="card">
         <div class="hd">
-          <h2>Quick Share + Print</h2>
-          <span class="tag">Drop this link in GroupMe/Slack</span>
+          <div>
+            <div class="h2">Leaderboard</div>
+            <div class="tag">Manual • Max 8 reps</div>
+          </div>
+          <div class="tag">Points • Sits • Bills</div>
         </div>
+
         <div class="bd">
-          <a class="btn" href="javascript:window.print()" aria-label="Print this page">
-            <span class="bolt">⚡</span> Print / Save as PDF
-          </a>
+          <div class="lb" id="lb"></div>
 
-          <div style="height:12px"></div>
-
-          <div class="rule" style="margin:0">
-            <div class="ico teal">📌</div>
-            <div>
-              <b>What reps should do every time</b>
-              <span>
-                1) Confirm homeowner + roof viability<br/>
-                2) Confirm bill meets minimum<br/>
-                3) Collect bill upfront (bonus)<br/>
-                4) Mark sit in Enzy immediately
-              </span>
-            </div>
+          <div class="btnRow">
+            <a class="btn" href="javascript:window.print()"><span class="bolt">⚡</span>Print / Save PDF</a>
+            <a class="btn" href="#" onclick="navigator.clipboard?.writeText(location.href);alert('Link copied!');return false;"><span class="bolt">🔗</span>Copy Link</a>
           </div>
 
-          <div style="height:12px"></div>
-
-          <div class="rule" style="margin:0">
-            <div class="ico green">✅</div>
-            <div>
-              <b>Definition: “Sit”</b>
-              <span>
-                Decision-maker present + real consultation (not a reschedule). Must be completed inside the window.
-              </span>
-            </div>
+          <div class="small">
+            To update leaderboard: edit <b>LEADERBOARD_DATA</b> at the bottom of this file, commit, and it updates.
           </div>
 
-          <div class="footer">
+          <div class="foot">
             <div>Built for mobile ✅</div>
-            <div>
-              <a href="#" onclick="navigator.clipboard?.writeText(location.href);alert('Link copied!');return false;">Copy Link</a>
-            </div>
+            <div>Fast updates ✅</div>
           </div>
         </div>
       </aside>
@@ -517,15 +525,12 @@
   </div>
 
   <script>
-    // Countdown to March 7, 2026 @ 8:00 PM (Pacific time intended)
-    // If you need a different year, change 2026 below.
+    // ===== Countdown (Days / Hours / Minutes) =====
+    // Pacific time intended. If you need a different year, change 2026 below.
     const end = new Date(2026, 2, 7, 20, 0, 0); // months are 0-based: 2 = March
-
     const $ = (id) => document.getElementById(id);
+    const pad2 = (n) => String(n).padStart(2,'0');
 
-    function pad2(n){ return String(n).padStart(2,'0'); }
-
-    // Days / Hours / Minutes only
     function tick(){
       const now = new Date();
       let ms = end - now;
@@ -547,22 +552,22 @@
       $("h").textContent = pad2(hrs);
       $("m").textContent = pad2(mins);
     }
-
     tick();
     setInterval(tick, 60000);
 
-    // ===== MANUAL LEADERBOARD DATA (edit this only) =====
-    // Up to 8 reps. Sorting: sits desc, tie-breaker = sales desc
+    // ===== Manual Leaderboard =====
+    // Points = sits*1.00 + bills*0.25
+    // Sorting: points desc, then sits->sales tie logic stays separate as "official tie-breaker"
     const LEADERBOARD_DATA = [
-      { name: "Rep 1", sits: 0, sales: 0, note: "Add notes if you want." },
-      { name: "Rep 2", sits: 0, sales: 0, note: "" },
-      { name: "Rep 3", sits: 0, sales: 0, note: "" },
-      // Add up to 8 total:
-      // { name: "Rep 4", sits: 0, sales: 0, note: "" },
-      // { name: "Rep 5", sits: 0, sales: 0, note: "" },
-      // { name: "Rep 6", sits: 0, sales: 0, note: "" },
-      // { name: "Rep 7", sits: 0, sales: 0, note: "" },
-      // { name: "Rep 8", sits: 0, sales: 0, note: "" },
+      // EDIT THESE VALUES (max 8)
+      { name: "Rep 1", sits: 0, bills: 0, sales: 0, note: "" },
+      { name: "Rep 2", sits: 0, bills: 0, sales: 0, note: "" },
+      { name: "Rep 3", sits: 0, bills: 0, sales: 0, note: "" },
+      // { name: "Rep 4", sits: 0, bills: 0, sales: 0, note: "" },
+      // { name: "Rep 5", sits: 0, bills: 0, sales: 0, note: "" },
+      // { name: "Rep 6", sits: 0, bills: 0, sales: 0, note: "" },
+      // { name: "Rep 7", sits: 0, bills: 0, sales: 0, note: "" },
+      // { name: "Rep 8", sits: 0, bills: 0, sales: 0, note: "" },
     ];
 
     function initials(name){
@@ -572,24 +577,37 @@
       return (a + b).toUpperCase();
     }
 
+    function pointsFor(r){
+      const sits = Number(r.sits||0);
+      const bills = Number(r.bills||0);
+      return (sits * 1.0) + (bills * 0.25);
+    }
+
     function renderLeaderboard(){
       const el = document.getElementById("lb");
       if(!el) return;
 
-      const data = [...LEADERBOARD_DATA]
-        .slice(0,8)
-        .sort((x,y) => (y.sits - x.sits) || (y.sales - x.sales) || (x.name.localeCompare(y.name)));
+      const data = [...LEADERBOARD_DATA].slice(0,8).map(r => ({
+        ...r,
+        sits: Number(r.sits||0),
+        bills: Number(r.bills||0),
+        sales: Number(r.sales||0),
+        pts: pointsFor(r)
+      }))
+      .sort((a,b) =>
+        (b.pts - a.pts) ||
+        (b.sits - a.sits) ||
+        (b.sales - a.sales) ||
+        (a.name||"").localeCompare(b.name||"")
+      );
 
       if(data.length === 0){
-        el.innerHTML = `<div class="rule" style="margin:0">
-          <div class="ico teal">📌</div>
-          <div><b>No entries yet</b><span>Add reps in LEADERBOARD_DATA.</span></div>
-        </div>`;
+        el.innerHTML = `<div class="block"><b><span class="icon teal">📌</span>No reps yet</b><p>Add reps in LEADERBOARD_DATA.</p></div>`;
         return;
       }
 
       el.innerHTML = data.map((r, i) => {
-        const rankClass = i === 0 ? "gold" : i === 1 ? "silver" : i === 2 ? "bronze" : "";
+        const rankClass = i===0 ? "gold" : i===1 ? "silver" : i===2 ? "bronze" : "";
         return `
           <div class="lbRow">
             <div class="lbLeft">
@@ -600,14 +618,19 @@
                 <div class="note">${r.note || ""}</div>
               </div>
             </div>
+
             <div class="lbRight">
               <div class="metric ${i===0 ? "win" : ""}">
-                <div class="v">${r.sits}</div>
-                <div class="k">Qualified Sits</div>
+                <div class="v">${r.pts.toFixed(2)}</div>
+                <div class="k">Points</div>
               </div>
               <div class="metric">
-                <div class="v">${r.sales}</div>
-                <div class="k">Sales (Tie)</div>
+                <div class="v">${r.sits}</div>
+                <div class="k">Sits</div>
+              </div>
+              <div class="metric">
+                <div class="v">${r.bills}</div>
+                <div class="k">Bills</div>
               </div>
             </div>
           </div>
