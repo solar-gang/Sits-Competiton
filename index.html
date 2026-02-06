@@ -3,17 +3,14 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-  <title>$1,000 Qualified Sits Challenge</title>
+  <title>LOS • 31-Day Qualified Sits Challenge</title>
   <meta name="theme-color" content="#0b1017"/>
 
   <style>
     :root{
       --bg:#070b12;
-      --panel:#0c1422;
-      --panel2:#0a111d;
-
       --text:rgba(255,255,255,.94);
-      --muted:rgba(255,255,255,.72);
+      --muted:rgba(255,255,255,.74);
       --muted2:rgba(255,255,255,.56);
 
       --gold:#FBC909;
@@ -23,6 +20,7 @@
 
       --grad: linear-gradient(135deg, var(--gold), var(--teal));
       --shadow: 0 18px 70px rgba(0,0,0,.55);
+
       --r:18px;
       --r2:28px;
 
@@ -30,6 +28,8 @@
       --safeB: env(safe-area-inset-bottom);
       --safeL: env(safe-area-inset-left);
       --safeR: env(safe-area-inset-right);
+
+      --tap: 52px;
     }
 
     *{box-sizing:border-box}
@@ -42,63 +42,58 @@
         radial-gradient(1200px 700px at 15% -10%, rgba(251,201,9,.20), transparent 55%),
         radial-gradient(900px 650px at 110% 15%, rgba(58,173,187,.18), transparent 55%),
         linear-gradient(180deg, var(--bg), #05070c);
-      padding: calc(14px + var(--safeT)) calc(14px + var(--safeR)) calc(18px + var(--safeB)) calc(14px + var(--safeL));
+      padding: calc(10px + var(--safeT)) calc(10px + var(--safeR)) calc(12px + var(--safeB)) calc(10px + var(--safeL));
       overflow:hidden;
     }
 
-    /* App frame */
+    /* Shell */
     .wrap{max-width:1100px;margin:0 auto;height:100%}
-    .shell{
-      height:100%;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
+    .shell{height:100%;display:flex;flex-direction:column;gap:10px}
 
     /* Top bar */
     .top{
       display:flex;
-      align-items:center;
+      align-items:flex-start;
       justify-content:space-between;
-      gap:12px;
+      gap:10px;
       flex-wrap:wrap;
     }
     .brand{
       display:flex;
       align-items:center;
-      gap:12px;
+      gap:10px;
       min-width:0;
+      flex: 1 1 340px;
     }
 
-    /* Logo: replace with your own image if you want */
-    .logo{
-      width:48px;height:48px;border-radius:18px;
+    /* Logo (put los-logo.png next to index.html) */
+    .logoImg{
+      width:46px;height:46px;border-radius:16px;object-fit:contain;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.14);
+      box-shadow: 0 14px 40px rgba(0,0,0,.45);
+      padding:6px;
+      flex:0 0 auto;
+    }
+    .logoFallback{
+      width:46px;height:46px;border-radius:16px;
       background: var(--grad);
       box-shadow: 0 14px 40px rgba(0,0,0,.45);
       position:relative;overflow:hidden;
       flex:0 0 auto;
+      display:none;
     }
-    .logo:after{
+    .logoFallback:after{
       content:"";
       position:absolute;inset:-45%;
       background: radial-gradient(circle at 30% 25%, rgba(255,255,255,.50), transparent 55%);
       transform: rotate(18deg);
       pointer-events:none;
     }
-    /* If you have a logo file, put it in your repo and uncomment below.
-       Example: <img class="logoImg" src="logo.png" alt="Logo"/> */
-    .logoImg{
-      width:48px;height:48px;border-radius:18px;object-fit:cover;
-      box-shadow: 0 14px 40px rgba(0,0,0,.45);
-      border:1px solid rgba(255,255,255,.18);
-    }
 
-    .title{
-      min-width:0;
-    }
     h1{
       margin:0;
-      font-size: clamp(18px, 3.2vw, 30px);
+      font-size: clamp(18px, 4.2vw, 28px);
       letter-spacing:.25px;
       line-height:1.05;
       white-space:nowrap;
@@ -111,8 +106,17 @@
       font-size:13px;
       line-height:1.35;
     }
+    .swipeHint{
+      color: rgba(255,255,255,.58);
+      font-size:12px;
+      margin-top:6px;
+    }
 
-    .pillRow{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:flex-end}
+    /* Prize pills */
+    .pillRow{
+      display:flex;gap:8px;flex-wrap:wrap;
+      align-items:center;justify-content:flex-end;
+    }
     .pill{
       display:inline-flex;align-items:center;gap:8px;
       padding:10px 12px;
@@ -121,17 +125,15 @@
       border:1px solid rgba(255,255,255,.12);
       box-shadow: 0 10px 24px rgba(0,0,0,.20);
       backdrop-filter: blur(10px);
-      font-weight:900;
+      font-weight:1000;
       font-size:13px;
-      color: var(--text);
-      user-select:none;
       white-space:nowrap;
     }
     .dot{width:10px;height:10px;border-radius:999px;background:var(--gold);box-shadow:0 0 0 4px rgba(251,201,9,.14)}
     .dot.teal{background:var(--teal);box-shadow:0 0 0 4px rgba(58,173,187,.14)}
     .dot.green{background:var(--green);box-shadow:0 0 0 4px rgba(52,199,89,.14)}
 
-    /* Slides */
+    /* Stage */
     .stage{
       flex:1;
       min-height:0;
@@ -141,6 +143,7 @@
       border:1px solid rgba(255,255,255,.10);
       box-shadow: var(--shadow);
       overflow:hidden;
+      touch-action: pan-y;
     }
     .track{
       height:100%;
@@ -152,10 +155,14 @@
     .slide{
       width:100%;
       height:100%;
-      padding:16px;
+      padding:14px;
       display:flex;
       flex-direction:column;
       gap:12px;
+
+      /* KEY: rules page scrolls on phones */
+      overflow:auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     /* Slide header */
@@ -163,7 +170,7 @@
       display:flex;
       align-items:flex-start;
       justify-content:space-between;
-      gap:12px;
+      gap:10px;
       flex-wrap:wrap;
       padding-bottom:10px;
       border-bottom:1px solid rgba(255,255,255,.08);
@@ -176,7 +183,7 @@
       border:1px solid rgba(255,255,255,.10);
       color:var(--muted);
       font-size:12px;
-      font-weight:900;
+      font-weight:1000;
       letter-spacing:.25px;
       text-transform:uppercase;
     }
@@ -184,10 +191,21 @@
       width:10px;height:10px;border-radius:999px;background:var(--teal);
       box-shadow:0 0 0 4px rgba(58,173,187,.12);
     }
+    .tag{
+      display:inline-flex;align-items:center;gap:6px;
+      border-radius:999px;
+      padding:9px 12px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      color:var(--muted);
+      font-size:12px;
+      white-space:nowrap;
+      font-weight:1000;
+    }
 
     /* Countdown */
     .countdown{
-      display:flex;gap:10px;flex-wrap:wrap;
+      display:flex;gap:8px;flex-wrap:wrap;
       font-variant-numeric: tabular-nums;
     }
     .timeBox{
@@ -195,23 +213,13 @@
       background: rgba(0,0,0,.22);
       border:1px solid rgba(255,255,255,.10);
       padding:10px 12px;
-      min-width: 92px;
+      min-width: 82px;
       text-align:center;
     }
-    .timeBox .num{font-size:20px;font-weight:1000;line-height:1}
-    .timeBox .lab{font-size:11px;color:var(--muted2);margin-top:5px;letter-spacing:.25px;text-transform:uppercase;font-weight:900}
+    .timeBox .num{font-size:20px;font-weight:1100;line-height:1}
+    .timeBox .lab{font-size:11px;color:var(--muted2);margin-top:5px;letter-spacing:.25px;text-transform:uppercase;font-weight:1100}
 
-    /* Big hero */
-    .hero{
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap:12px;
-      flex:1;
-      min-height:0;
-    }
-    @media (max-width: 880px){
-      .hero{grid-template-columns:1fr}
-    }
+    /* Panels */
     .panel{
       border-radius: var(--r2);
       background: rgba(0,0,0,.18);
@@ -219,7 +227,6 @@
       padding:14px;
       position:relative;
       overflow:hidden;
-      min-height:0;
     }
     .panel:after{
       content:"";
@@ -229,12 +236,22 @@
       pointer-events:none;
     }
 
-    .bigMoney{
-      font-size: clamp(32px, 6vw, 56px);
-      font-weight:1100;
-      letter-spacing:.2px;
+    /* Slide 1 layout */
+    .hero{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:12px;
+    }
+    @media (max-width: 900px){
+      .hero{grid-template-columns:1fr}
+    }
+
+    .headline{
+      font-size: clamp(22px, 5.4vw, 44px);
+      font-weight:1200;
       line-height:1.05;
-      margin:6px 0 8px 0;
+      letter-spacing:.2px;
+      margin:8px 0 8px 0;
     }
     .cashTag{
       display:inline-flex;align-items:center;gap:8px;
@@ -242,77 +259,83 @@
       border-radius: 18px;
       background: var(--grad);
       color:#06122a;
-      font-weight:1100;
+      font-weight:1200;
       letter-spacing:.35px;
       box-shadow: 0 14px 40px rgba(0,0,0,.35);
     }
-    .cashTag small{font-weight:1000; opacity:.95}
     .leadLine{
       color:var(--muted);
       font-size:15px;
       line-height:1.35;
-      margin-top:10px;
-      max-width: 58ch;
+      margin-top:8px;
+      max-width: 62ch;
     }
-
-    .scoreRow{
+    .miniGrid{
       display:grid;
       grid-template-columns: repeat(2, 1fr);
       gap:10px;
       margin-top:12px;
     }
     @media (max-width: 520px){
-      .scoreRow{grid-template-columns:1fr}
+      .miniGrid{grid-template-columns:1fr}
     }
-    .scoreBox{
+    .mini{
       border-radius: var(--r);
       background: rgba(0,0,0,.22);
       border:1px solid rgba(255,255,255,.10);
-      padding:12px 12px;
+      padding:12px;
     }
-    .scoreBox .k{
+    .mini .k{
       color:var(--muted2);
       font-size:11px;
       letter-spacing:.35px;
       text-transform:uppercase;
-      font-weight:1000;
-    }
-    .scoreBox .v{
-      margin-top:6px;
-      font-size:24px;
       font-weight:1100;
+    }
+    .mini .v{
+      margin-top:6px;
+      font-size:22px;
+      font-weight:1200;
       font-variant-numeric: tabular-nums;
       line-height:1.05;
     }
-    .scoreBox .v.gold{color:var(--gold)}
-    .scoreBox .v.teal{color:var(--teal)}
+    .mini .v.gold{color:var(--gold)}
+    .mini .v.teal{color:var(--teal)}
 
-    /* Prize ladder */
+    .callout{
+      border-radius: var(--r2);
+      background: rgba(251,201,9,.10);
+      border:1px solid rgba(251,201,9,.20);
+      padding:12px;
+      color: rgba(255,255,255,.92);
+      margin-top:12px;
+    }
+    .callout b{color:#fff}
+
+    /* Prize cards w/ images next to index.html */
     .prizes{
       display:flex;
       flex-direction:column;
       gap:10px;
-      height:100%;
-      min-height:0;
     }
     .prizeCard{
       border-radius: var(--r2);
       background: rgba(0,0,0,.18);
       border:1px solid rgba(255,255,255,.10);
-      padding:12px 12px;
-      display:flex;
+      padding:12px;
+      display:grid;
+      grid-template-columns: 1fr 130px;
+      gap:10px;
       align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      overflow:hidden;
     }
-    .place{
-      display:flex;align-items:center;gap:10px;min-width:0;
+    @media (max-width: 420px){
+      .prizeCard{grid-template-columns: 1fr 110px}
     }
+    .placeRow{display:flex;align-items:center;gap:10px;min-width:0}
     .badge{
       width:44px;height:44px;border-radius:18px;
       display:grid;place-items:center;
-      font-weight:1100;
+      font-weight:1200;
       background: rgba(255,255,255,.08);
       border:1px solid rgba(255,255,255,.12);
       flex:0 0 auto;
@@ -321,120 +344,59 @@
     .badge.two{background: rgba(255,255,255,.18)}
     .badge.three{background: rgba(251,201,9,.10); border-color: rgba(251,201,9,.18)}
     .prizeText{min-width:0}
-    .prizeText b{
-      display:block;
-      font-weight:1100;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .prizeText span{
-      display:block;
-      color:var(--muted);
-      font-size:13px;
-      margin-top:2px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .prizeVisual{
-      flex:0 0 auto;
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
+    .prizeText b{display:block;font-weight:1200;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .prizeText span{display:block;color:var(--muted);font-size:13px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-    /* iPad SVG container */
-    .ipad{
-      width:92px;height:62px;
-      border-radius:16px;
+    .imgBox{
+      width:100%;
+      height:82px;
+      border-radius: 18px;
+      overflow:hidden;
       background: rgba(255,255,255,.05);
       border:1px solid rgba(255,255,255,.10);
-      display:grid;
-      place-items:center;
-      overflow:hidden;
     }
-    .polo{
-      width:92px;height:62px;
-      border-radius:16px;
-      background: rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.10);
-      display:grid;
-      place-items:center;
-      overflow:hidden;
+    .imgBox img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
     }
 
-    /* Slide 2: rules layout */
+    /* Slide 2: Rules */
     .rulesGrid{
       display:grid;
       grid-template-columns: 1fr 1fr;
       gap:12px;
-      flex:1;
-      min-height:0;
     }
     @media (max-width: 920px){
       .rulesGrid{grid-template-columns:1fr}
     }
-    .list{
-      margin:0;
-      padding:0;
-      list-style:none;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
+    .list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
     .item{
       border-radius: var(--r2);
       background: rgba(0,0,0,.18);
       border:1px solid rgba(255,255,255,.10);
-      padding:12px 12px;
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
+      padding:12px;
+      display:flex;gap:10px;align-items:flex-start;
     }
     .ico{
-      width:30px;height:30px;border-radius:12px;
+      width:34px;height:34px;border-radius:12px;
       display:grid;place-items:center;
       background: rgba(58,173,187,.14);
       border:1px solid rgba(58,173,187,.22);
       flex:0 0 auto;
-      font-weight:1100;
+      font-weight:1200;
     }
     .ico.red{background: rgba(255,59,48,.12); border-color: rgba(255,59,48,.20)}
     .ico.gold{background: rgba(251,201,9,.12); border-color: rgba(251,201,9,.20)}
-    .item b{display:block;margin-bottom:3px;font-weight:1100}
-    .item span{color:var(--muted);font-size:14px;line-height:1.35}
+    .item b{display:block;margin-bottom:3px;font-weight:1200;font-size:15px}
+    .item span{color:var(--muted);font-size:15px;line-height:1.35}
 
-    .callout{
-      border-radius: var(--r2);
-      background: rgba(251,201,9,.10);
-      border:1px solid rgba(251,201,9,.20);
-      padding:12px 12px;
-      color: rgba(255,255,255,.92);
-    }
-    .callout b{color:#fff}
-
-    /* Slide 3 placeholder */
-    .center{
-      flex:1;
-      display:grid;
-      place-items:center;
-    }
-    .coming{
-      text-align:center;
-      max-width: 680px;
-    }
-    .coming h2{
-      margin:0;
-      font-size: clamp(22px, 4vw, 34px);
-      letter-spacing:.2px;
-    }
-    .coming p{
-      margin:10px 0 0 0;
-      color:var(--muted);
-      font-size:15px;
-      line-height:1.45;
-    }
+    /* Slide 3 */
+    .center{display:grid;place-items:center;min-height: 55vh;}
+    .coming{text-align:center;max-width: 740px;}
+    .coming h2{margin:0;font-size: clamp(20px, 4.2vw, 34px);letter-spacing:.2px;}
+    .coming p{margin:10px 0 0 0;color:var(--muted);font-size:15px;line-height:1.45;}
     .ghostBoard{
       margin-top:14px;
       border-radius: var(--r2);
@@ -447,45 +409,37 @@
       line-height:1.45;
     }
 
-    /* Bottom controls */
+    /* Controls */
     .controls{
-      display:flex;
+      display:grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap:10px;
       align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
     }
-    .btnRow{display:flex;gap:10px;flex-wrap:wrap}
+    .btnRow{display:flex;gap:10px}
     .btn{
-      display:inline-flex;align-items:center;gap:10px;
-      padding:12px 14px;border-radius: 18px;
-      background: rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.12);
-      text-decoration:none;color:var(--text);
-      font-weight:1100;
-      user-select:none;
-      cursor:pointer;
-    }
-    .btn:active{transform: translateY(1px)}
-    .btn.primary{
-      background: var(--grad);
-      border-color: rgba(251,201,9,.22);
-      color:#06122a;
-    }
-    .btn.disabled{
-      opacity:.45;
-      pointer-events:none;
-    }
-    .dots{
-      display:flex;
-      gap:8px;
+      height: var(--tap);
+      min-width: 110px;
+      display:inline-flex;
       align-items:center;
       justify-content:center;
-      flex:1;
-      min-width: 120px;
+      padding:0 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      color:var(--text);
+      font-weight:1200;
+      user-select:none;
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
     }
+    .btn:active{transform: translateY(1px)}
+    .btn.primary{background: var(--grad); border-color: rgba(251,201,9,.22); color:#06122a;}
+    .btn.disabled{opacity:.45;pointer-events:none}
+
+    .dots{display:flex;gap:8px;align-items:center;justify-content:center;}
     .dotNav{
-      width:10px;height:10px;border-radius:999px;
+      width:12px;height:12px;border-radius:999px;
       background: rgba(255,255,255,.18);
       border:1px solid rgba(255,255,255,.14);
     }
@@ -498,12 +452,13 @@
       color:var(--muted2);
       font-size:12px;
       white-space:nowrap;
+      justify-self:end;
     }
-
-    /* Mobile safe tap spacing */
-    @media (max-width: 420px){
-      .btn{padding:12px 12px}
-      .pill{padding:10px 10px}
+    @media (max-width: 520px){
+      .pill{font-size:12px;padding:9px 10px}
+      .timeBox{min-width: 76px}
+      .btn{min-width: 96px}
+      .meta{justify-self:center;grid-column: 1 / -1; text-align:center;}
     }
   </style>
 </head>
@@ -515,19 +470,21 @@
       <!-- TOP BAR -->
       <div class="top">
         <div class="brand">
-          <!-- Replace with your logo image if you want:
-               <img class="logoImg" src="logo.png" alt="Logo"> -->
-          <div class="logo" aria-hidden="true"></div>
+          <!-- Put los-logo.png in the SAME folder as index.html -->
+          <img class="logoImg" src="los-logo.png" alt="LOS Logo"
+               onerror="this.style.display='none';document.getElementById('logoFallback').style.display='block';">
+          <div id="logoFallback" class="logoFallback" aria-hidden="true"></div>
 
           <div class="title">
-            <h1>Qualified Sits Challenge</h1>
+            <h1>31-Day Qualified Sits Challenge</h1>
             <div class="sub">
-              31 days • Starts today at <b>12:00 PM</b> • Updates every <b>24 hours</b>
+              Starts today at <b>12:00 PM</b> • Updates every <b>24 hours</b>
+              <div class="swipeHint">Swipe left/right on the slides →</div>
             </div>
           </div>
         </div>
 
-        <div class="pillRow">
+        <div class="pillRow" aria-label="Prizes">
           <div class="pill"><span class="dot"></span> 1st: <b>$1,000 Cash</b></div>
           <div class="pill"><span class="dot teal"></span> 2nd: <b>iPad</b></div>
           <div class="pill"><span class="dot green"></span> 3rd: <b>Work Polo</b></div>
@@ -542,13 +499,11 @@
           <section class="slide" aria-label="Slide 1">
             <div class="slideHd">
               <div>
-                <div class="kicker"><span class="miniDot"></span> Slide 1 • Competition</div>
-                <div class="sub" style="margin-top:8px">
-                  Top lead generator wins. Clean sits. Stack points. Stay consistent.
-                </div>
+                <div class="kicker"><span class="miniDot"></span> Slide 1 • Prizes + Countdown</div>
+                <div class="sub" style="margin-top:8px">Win the month. Stack clean sits. Get paid.</div>
               </div>
 
-              <div class="countdown" aria-label="Countdown to end date">
+              <div class="countdown" aria-label="Countdown">
                 <div class="timeBox"><div class="num" id="d">—</div><div class="lab">Days</div></div>
                 <div class="timeBox"><div class="num" id="h">—</div><div class="lab">Hours</div></div>
                 <div class="timeBox"><div class="num" id="m">—</div><div class="lab">Minutes</div></div>
@@ -558,91 +513,82 @@
             <div class="hero">
               <div class="panel">
                 <div class="cashTag">💵 $1,000 <small>STRAIGHT CASH</small></div>
-                <div class="bigMoney">Top Lead Generator</div>
+                <div class="headline">To the Top Lead Generator</div>
 
                 <div class="leadLine">
-                  Every <b>qualified sit</b> is <b>1 point</b>. Collecting the bill upfront adds a <b>+0.25 bonus</b>.
-                  Updates post every <b>24 hours</b>.
+                  <b>Scoring:</b> 1 qualified sit = <b>1.00 point</b>. Collecting the bill upfront adds <b>+0.25</b>.
+                  <br><br>
+                  <b>Updates:</b> posted every <b>24 hours</b>.
                 </div>
 
-                <div class="scoreRow">
-                  <div class="scoreBox">
-                    <div class="k">Points per sit</div>
+                <div class="miniGrid">
+                  <div class="mini">
+                    <div class="k">Points per qualified sit</div>
                     <div class="v gold">1.00</div>
                   </div>
-                  <div class="scoreBox">
+                  <div class="mini">
                     <div class="k">Bill bonus (upfront)</div>
                     <div class="v teal">+0.25</div>
                   </div>
                 </div>
 
-                <div style="margin-top:12px" class="callout">
+                <div class="callout">
                   <b>Team requirement:</b> Prize activates only if the team hits <b>40 qualified sits</b> combined.
                 </div>
 
-                <div class="small">
-                  Window: <b>Feb 6, 2026 @ 12:00 PM</b> → <b>Mar 9, 2026 @ 12:00 PM</b> (31 days).
+                <div class="sub" style="margin-top:10px;color:rgba(255,255,255,.62)">
+                  31-day window starts today at 12:00 PM.
                 </div>
               </div>
 
               <div class="prizes">
+                <!-- Put these images in the SAME folder as index.html:
+                     cash.jpg  |  ipad.jpg  |  polo.jpg
+                     (Your screenshots work—just rename them.)
+                -->
                 <div class="prizeCard">
-                  <div class="place">
-                    <div class="badge one">1st</div>
-                    <div class="prizeText">
-                      <b>$1,000 Straight Cash</b>
-                      <span>Top lead generator (most points)</span>
+                  <div>
+                    <div class="placeRow">
+                      <div class="badge one">1st</div>
+                      <div class="prizeText">
+                        <b>$1,000 Straight Cash</b>
+                        <span>Top points wins</span>
+                      </div>
                     </div>
                   </div>
-                  <div class="prizeVisual" aria-hidden="true">
-                    <div class="badge one">💵</div>
+                  <div class="imgBox">
+                    <img src="cash.jpg" alt="$1,000 cash">
                   </div>
                 </div>
 
                 <div class="prizeCard">
-                  <div class="place">
-                    <div class="badge two">2nd</div>
-                    <div class="prizeText">
-                      <b>iPad</b>
-                      <span>Runner-up</span>
+                  <div>
+                    <div class="placeRow">
+                      <div class="badge two">2nd</div>
+                      <div class="prizeText">
+                        <b>iPad</b>
+                        <span>Runner-up</span>
+                      </div>
                     </div>
                   </div>
-                  <div class="prizeVisual">
-                    <div class="ipad" aria-label="iPad image">
-                      <!-- Simple iPad illustration (no external image needed) -->
-                      <svg width="92" height="62" viewBox="0 0 92 62" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="iPad">
-                        <rect x="18" y="6" width="56" height="50" rx="10" fill="rgba(255,255,255,0.10)" stroke="rgba(255,255,255,0.18)"/>
-                        <rect x="24" y="12" width="44" height="36" rx="6" fill="rgba(0,0,0,0.28)" stroke="rgba(255,255,255,0.10)"/>
-                        <circle cx="46" cy="52" r="3" fill="rgba(255,255,255,0.18)"/>
-                        <path d="M26 16C35 12 57 12 66 16" stroke="rgba(251,201,9,0.55)" stroke-width="2" stroke-linecap="round"/>
-                      </svg>
-                    </div>
+                  <div class="imgBox">
+                    <img src="ipad.jpg" alt="iPad">
                   </div>
                 </div>
 
                 <div class="prizeCard">
-                  <div class="place">
-                    <div class="badge three">3rd</div>
-                    <div class="prizeText">
-                      <b>Work Polo</b>
-                      <span>3rd place prize</span>
+                  <div>
+                    <div class="placeRow">
+                      <div class="badge three">3rd</div>
+                      <div class="prizeText">
+                        <b>Work Polo</b>
+                        <span>3rd place prize</span>
+                      </div>
                     </div>
                   </div>
-                  <div class="prizeVisual">
-                    <div class="polo" aria-label="Work polo icon">
-                      <!-- Simple polo illustration -->
-                      <svg width="92" height="62" viewBox="0 0 92 62" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Polo">
-                        <path d="M32 14L46 8L60 14L66 22V50H26V22L32 14Z" fill="rgba(255,255,255,0.10)" stroke="rgba(255,255,255,0.18)"/>
-                        <path d="M46 8V22" stroke="rgba(58,173,187,0.65)" stroke-width="2" stroke-linecap="round"/>
-                        <path d="M40 18H52" stroke="rgba(255,255,255,0.16)" stroke-width="2" stroke-linecap="round"/>
-                        <path d="M41 14L46 18L51 14" stroke="rgba(251,201,9,0.55)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
-                    </div>
+                  <div class="imgBox">
+                    <img src="polo.jpg" alt="Work polo">
                   </div>
-                </div>
-
-                <div class="callout">
-                  <b>Reminder:</b> Updates happen every <b>24 hours</b>. Stay locked in.
                 </div>
               </div>
             </div>
@@ -652,28 +598,24 @@
           <section class="slide" aria-label="Slide 2">
             <div class="slideHd">
               <div>
-                <div class="kicker"><span class="miniDot"></span> Slide 2 • Rules</div>
-                <div class="sub" style="margin-top:8px">
-                  Keep it simple: qualify it, log it, collect the bill, move on.
-                </div>
+                <div class="kicker"><span class="miniDot"></span> Slide 2 • Rules + Disqualifications</div>
+                <div class="sub" style="margin-top:8px">Qualify it • log it • collect the bill • move on.</div>
               </div>
-
-              <div class="tag" style="padding:9px 12px;font-weight:1000">
-                Scoring: <b>1 sit = 1 point</b> • Bill bonus <b>+0.25</b>
-              </div>
+              <div class="tag">1 sit = 1 point • bill bonus +0.25</div>
             </div>
 
             <div class="rulesGrid">
               <div class="panel">
                 <div class="kicker"><span class="miniDot"></span> Qualification</div>
+
                 <ul class="list" style="margin-top:12px">
                   <li class="item">
                     <div class="ico gold">🔌</div>
                     <div>
                       <b>Bill minimums</b>
                       <span>
-                        <b>Add-on:</b> Annual bill <b>$1,750+</b><br/>
-                        <b>Non-solar:</b> Monthly bill <b>$140+</b>
+                        <b>Add-on appointment:</b> annual bill <b>$1,750+</b><br>
+                        <b>Non-solar home:</b> monthly bill <b>$140+</b>
                       </span>
                     </div>
                   </li>
@@ -681,8 +623,8 @@
                   <li class="item">
                     <div class="ico">🏠</div>
                     <div>
-                      <b>Homeowner + buildable roof</b>
-                      <span>Must be homeowner. Homes with not enough roof space do not count.</span>
+                      <b>Homeowner + roof viable</b>
+                      <span>Renters don’t count. Homes with not enough roof space don’t count.</span>
                     </div>
                   </li>
 
@@ -690,7 +632,7 @@
                     <div class="ico">📲</div>
                     <div>
                       <b>Enzy required</b>
-                      <span>All sits must be marked in Enzy. Reps must use Enzy on doors at all times.</span>
+                      <span>All sits must be marked in Enzy and reps must use Enzy on doors at all times.</span>
                     </div>
                   </li>
 
@@ -698,7 +640,15 @@
                     <div class="ico gold">💰</div>
                     <div>
                       <b>Bill bonus (+0.25)</b>
-                      <span>Bill must be collected upfront (photo/digital) and tied to that sit.</span>
+                      <span>Bill collected upfront (photo/digital) tied to that sit.</span>
+                    </div>
+                  </li>
+
+                  <li class="item">
+                    <div class="ico gold">👥</div>
+                    <div>
+                      <b>Team minimum</b>
+                      <span>Competition pays out only if the team hits <b>40 qualified sits</b> combined.</span>
                     </div>
                   </li>
                 </ul>
@@ -706,12 +656,13 @@
 
               <div class="panel">
                 <div class="kicker"><span class="miniDot"></span> Disqualifications</div>
+
                 <ul class="list" style="margin-top:12px">
                   <li class="item">
                     <div class="ico red">🚫</div>
                     <div>
                       <b>Renters</b>
-                      <span>Renters are disqualified and do not count.</span>
+                      <span>Disqualified and do not count.</span>
                     </div>
                   </li>
 
@@ -719,14 +670,14 @@
                     <div class="ico red">🧱</div>
                     <div>
                       <b>Not buildable</b>
-                      <span>Homes with not enough roof space or clearly unbuildable setups do not count.</span>
+                      <span>Not enough roof space / clearly unbuildable homes do not count.</span>
                     </div>
                   </li>
 
                   <li class="item">
                     <div class="ico red">⏱️</div>
                     <div>
-                      <b>Late / not logged</b>
+                      <b>Not logged / late</b>
                       <span>If it isn’t logged correctly in Enzy, it doesn’t count.</span>
                     </div>
                   </li>
@@ -734,18 +685,18 @@
                   <li class="item">
                     <div class="ico red">🛑</div>
                     <div>
-                      <b>Integrity rule</b>
+                      <b>Integrity</b>
                       <span>Any fake sits, manipulated bills, or fraudulent logging = immediate disqualification.</span>
                     </div>
                   </li>
                 </ul>
 
-                <div class="callout" style="margin-top:12px">
-                  <b>Tie-breaker:</b> If points tie, winner is the rep with <b>more sits converted to sales</b>.
+                <div class="callout">
+                  <b>Tie-breaker:</b> if points tie, winner is the rep with <b>more sits converted to sales</b>.
                 </div>
 
-                <div class="small">
-                  *Management reserves the right to verify bill amounts, roof viability, and Enzy accuracy.
+                <div class="sub" style="margin-top:10px;color:rgba(255,255,255,.62)">
+                  Management can verify bill amounts, roof viability, and Enzy accuracy.
                 </div>
               </div>
             </div>
@@ -756,32 +707,26 @@
             <div class="slideHd">
               <div>
                 <div class="kicker"><span class="miniDot"></span> Slide 3 • Updates</div>
-                <div class="sub" style="margin-top:8px">
-                  Updates post every <b>24 hours</b>. Leaderboard will be added next.
-                </div>
+                <div class="sub" style="margin-top:8px">Updates happen every <b>24 hours</b>. Leaderboard will be added next.</div>
               </div>
-
-              <div class="tag" style="padding:9px 12px;font-weight:1000">
-                Update cadence: <b>Every 24 hours</b>
-              </div>
+              <div class="tag">Update cadence: every 24 hours</div>
             </div>
 
             <div class="center">
               <div class="coming">
-                <h2>Leaderboard Coming Next</h2>
+                <h2>Daily Update Board</h2>
                 <p>
-                  For now, this slide is your <b>daily update board</b>.
-                  When you’re ready, we’ll plug in the leaderboard (manual first, then Supabase later).
+                  Use this slide for the daily post. When you’re ready, we’ll add the leaderboard (manual first, Supabase later).
                 </p>
 
                 <div class="ghostBoard">
-                  <b>Daily Update Template (paste here later):</b><br/><br/>
-                  • Team Qualified Sits: ___ / 40<br/>
-                  • 1st: __________________ (Points: ____)<br/>
-                  • 2nd: __________________ (Points: ____)<br/>
-                  • 3rd: __________________ (Points: ____)<br/><br/>
+                  <b>Daily Update Template:</b><br><br>
+                  • Team Qualified Sits: ___ / 40<br>
+                  • 1st: __________________ (Points: ____)<br>
+                  • 2nd: __________________ (Points: ____)<br>
+                  • 3rd: __________________ (Points: ____)<br><br>
                   <span style="color:rgba(255,255,255,.55)">
-                    Tip: You can post the update in GroupMe + screenshot this slide.
+                    Tip: post the update in GroupMe and screenshot this slide.
                   </span>
                 </div>
               </div>
@@ -792,7 +737,7 @@
       </div>
 
       <!-- CONTROLS -->
-      <div class="controls">
+      <div class="controls" aria-label="Slide controls">
         <div class="btnRow">
           <button class="btn" id="prevBtn" type="button">← Prev</button>
         </div>
@@ -813,19 +758,25 @@
   </div>
 
   <script>
-    // ===== Competition window (Pacific time intended) =====
-    // Start: Feb 6, 2026 @ 12:00 PM
-    // Duration: 31 days
-    // End: Mar 9, 2026 @ 12:00 PM
-    const start = new Date(2026, 1, 6, 12, 0, 0); // Feb (month 1), 6th, 12:00
-    const end   = new Date(2026, 2, 9, 12, 0, 0); // Mar (month 2), 9th, 12:00
+    // ============================
+    // 31-DAY COUNTDOWN
+    // Starts: TODAY at 12:00 PM (viewer’s local time)
+    // Ends: 31 days later at 12:00 PM
+    // ============================
+    const now = new Date();
+    const start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0);
+
+    // If it’s already past 12:00 PM today, start immediately (this afternoon start already passed)
+    const effectiveStart = (now > start) ? now : start;
+
+    const end = new Date(effectiveStart.getTime() + 31 * 24 * 60 * 60 * 1000);
 
     const $ = (id) => document.getElementById(id);
     const pad2 = (n) => String(n).padStart(2,'0');
 
     function tick(){
-      const now = new Date();
-      let ms = end - now;
+      const t = new Date();
+      let ms = end - t;
 
       if (ms <= 0){
         $("d").textContent = "0";
@@ -846,7 +797,9 @@
     tick();
     setInterval(tick, 60000);
 
-    // ===== Slide navigation (buttons + swipe + keyboard) =====
+    // ============================
+    // SLIDE NAV (buttons + swipe + keyboard)
+    // ============================
     const track = $("track");
     const prevBtn = $("prevBtn");
     const nextBtn = $("nextBtn");
@@ -870,22 +823,22 @@
     prevBtn.addEventListener("click", ()=> setSlide(idx-1));
     nextBtn.addEventListener("click", ()=> setSlide(idx+1));
 
-    // Keyboard
     window.addEventListener("keydown", (e)=>{
       if(e.key === "ArrowLeft") setSlide(idx-1);
       if(e.key === "ArrowRight") setSlide(idx+1);
     });
 
-    // Swipe
+    // Swipe on stage
+    const stage = document.querySelector(".stage");
     let startX = 0, startY = 0, dragging = false;
 
-    track.addEventListener("touchstart", (e)=>{
+    stage.addEventListener("touchstart", (e)=>{
       const t = e.touches[0];
       startX = t.clientX; startY = t.clientY;
       dragging = true;
     }, {passive:true});
 
-    track.addEventListener("touchend", (e)=>{
+    stage.addEventListener("touchend", (e)=>{
       if(!dragging) return;
       dragging = false;
       const t = e.changedTouches[0];
@@ -893,7 +846,7 @@
       const dy = t.clientY - startY;
 
       // If mostly horizontal swipe
-      if(Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)){
+      if(Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy)){
         if(dx < 0) setSlide(idx+1);
         if(dx > 0) setSlide(idx-1);
       }
