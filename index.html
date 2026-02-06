@@ -1,301 +1,708 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<title>31-Day Qualified Sits Challenge</title>
-<meta name="theme-color" content="#0b1017"/>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <title>31-Day Qualified Sits Challenge</title>
+  <meta name="theme-color" content="#0b1017"/>
 
-<style>
-:root{
-  --bg:#070b12;
-  --panel:#0b1017;
-  --stroke:rgba(255,255,255,.12);
-  --text:#fff;
-  --muted:rgba(255,255,255,.7);
+  <style>
+    :root{
+      --bg:#070b12;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(0,0,0,.28);
+      --stroke: rgba(255,255,255,.14);
+      --text: rgba(255,255,255,.95);
+      --muted: rgba(255,255,255,.70);
 
-  --gold:#FBC909;
-  --teal:#3AADBB;
-  --green:#34c759;
-  --red:#ff453a;
+      --gold:#FBC909;
+      --teal:#3AADBB;
+      --green:#34c759;
+      --red:#ff453a;
 
-  --grad:linear-gradient(135deg,var(--gold),var(--teal));
-  --r:18px;
-  --r2:26px;
-  --tap:56px;
-}
+      --grad: linear-gradient(135deg, var(--gold), var(--teal));
+      --shadow: 0 18px 70px rgba(0,0,0,.55);
 
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
-  background:
-    radial-gradient(900px 500px at 10% -10%, rgba(251,201,9,.18), transparent 60%),
-    radial-gradient(900px 500px at 110% 20%, rgba(58,173,187,.18), transparent 60%),
-    linear-gradient(180deg,var(--bg),#05070c);
-  color:var(--text);
-  padding:12px;
-  overflow:hidden;
-}
+      --r:18px;
+      --r2:26px;
 
-.app{
-  max-width:1100px;
-  height:100%;
-  margin:auto;
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
+      --tap:56px;
 
-/* HEADER */
-.header{
-  display:flex;
-  gap:12px;
-  align-items:center;
-  flex-wrap:wrap;
-}
-.header img{
-  width:48px;height:48px;
-  border-radius:14px;
-  background:#fff;
-  padding:6px;
-  object-fit:contain;
-}
-.header h1{
-  margin:0;
-  font-size:clamp(18px,4.5vw,30px);
-}
-.sub{color:var(--muted);font-size:13px}
+      --safeT: env(safe-area-inset-top);
+      --safeB: env(safe-area-inset-bottom);
+      --safeL: env(safe-area-inset-left);
+      --safeR: env(safe-area-inset-right);
+    }
 
-/* SLIDES */
-.stage{
-  flex:1;
-  background:rgba(255,255,255,.04);
-  border:1px solid var(--stroke);
-  border-radius:var(--r2);
-  overflow:hidden;
-}
-.track{
-  display:flex;
-  width:300%;
-  height:100%;
-  transition:transform .35s ease;
-}
-.slide{
-  width:100%;
-  padding:14px;
-  overflow:auto;
-  -webkit-overflow-scrolling:touch;
-}
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      color: var(--text);
+      background:
+        radial-gradient(1100px 650px at 12% -12%, rgba(251,201,9,.20), transparent 60%),
+        radial-gradient(950px 650px at 110% 20%, rgba(58,173,187,.18), transparent 60%),
+        linear-gradient(180deg, var(--bg), #05070c);
+      padding: calc(12px + var(--safeT)) calc(12px + var(--safeR)) calc(14px + var(--safeB)) calc(12px + var(--safeL));
+      overflow:hidden;
+    }
 
-/* COUNTDOWN */
-.countdown{
-  display:flex;
-  gap:10px;
-  margin-bottom:16px;
-}
-.time{
-  background:#000;
-  border:1px solid var(--stroke);
-  border-radius:14px;
-  padding:10px 14px;
-  min-width:84px;
-  text-align:center;
-}
-.time b{font-size:22px}
-.time span{font-size:11px;color:var(--muted)}
+    .wrap{
+      max-width:1100px;
+      margin:0 auto;
+      height:100%;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
 
-/* PRIZES */
-.prize{
-  display:grid;
-  grid-template-columns:1fr 130px;
-  gap:12px;
-  background:#000;
-  border:1px solid var(--stroke);
-  border-radius:18px;
-  padding:14px;
-  margin-bottom:12px;
-}
-.prize img{
-  width:100%;
-  height:90px;
-  object-fit:cover;
-  border-radius:12px;
-}
-.badge{font-weight:900;margin-bottom:4px}
+    /* HEADER */
+    .top{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:12px;
+      flex-wrap:wrap;
+    }
 
-/* RULES */
-.rule{
-  background:#000;
-  border:1px solid var(--stroke);
-  border-radius:18px;
-  padding:14px;
-  margin-bottom:12px;
-}
-.rule b{
-  display:block;
-  margin-bottom:6px;
-}
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      min-width: 280px;
+      flex: 1 1 360px;
+    }
 
-/* CONTROLS */
-.controls{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-}
-button{
-  height:var(--tap);
-  min-width:130px;
-  border:none;
-  border-radius:18px;
-  font-weight:900;
-  font-size:15px;
-  background:var(--grad);
-}
-button.secondary{
-  background:rgba(255,255,255,.08);
-  color:#fff;
-}
-</style>
+    .logo{
+      width:52px;
+      height:52px;
+      border-radius:16px;
+      background:#fff;
+      padding:7px;
+      object-fit:contain;
+      box-shadow: 0 14px 40px rgba(0,0,0,.35);
+      flex: 0 0 auto;
+    }
+
+    .title h1{
+      margin:0;
+      font-size: clamp(18px, 4.5vw, 30px);
+      line-height:1.05;
+      letter-spacing:.2px;
+    }
+    .title .sub{
+      margin-top:6px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .pills{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      align-items:center;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 12px;
+      border-radius:999px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow: 0 10px 22px rgba(0,0,0,.22);
+      font-weight: 1000;
+      font-size: 13px;
+      white-space:nowrap;
+    }
+    .dot{width:10px;height:10px;border-radius:999px;background:var(--gold);box-shadow:0 0 0 4px rgba(251,201,9,.14)}
+    .dot.teal{background:var(--teal);box-shadow:0 0 0 4px rgba(58,173,187,.14)}
+    .dot.green{background:var(--green);box-shadow:0 0 0 4px rgba(52,199,89,.14)}
+
+    /* MAIN PANEL */
+    .panel{
+      flex:1;
+      min-height:0;
+      border-radius: var(--r2);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+
+    /* Slides (simple, reliable: show/hide) */
+    .slides{
+      height:100%;
+      position:relative;
+    }
+    .slide{
+      position:absolute;
+      inset:0;
+      padding:14px;
+      overflow:auto;
+      -webkit-overflow-scrolling:touch;
+      display:none;
+    }
+    .slide.active{display:block;}
+
+    .slideHead{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:flex-start;
+      flex-wrap:wrap;
+      padding-bottom:10px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      margin-bottom:12px;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 10px;
+      border-radius:999px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      color: var(--muted);
+      font-weight: 1000;
+      font-size: 12px;
+      letter-spacing:.25px;
+      text-transform:uppercase;
+    }
+    .chip .miniDot{
+      width:10px;height:10px;border-radius:999px;background:var(--teal);
+      box-shadow:0 0 0 4px rgba(58,173,187,.12);
+    }
+
+    /* Countdown */
+    .countRow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      font-variant-numeric: tabular-nums;
+    }
+    .timeBox{
+      min-width: 86px;
+      border-radius: 16px;
+      background: rgba(0,0,0,.24);
+      border: 1px solid rgba(255,255,255,.12);
+      padding: 10px 12px;
+      text-align:center;
+    }
+    .timeBox .num{
+      font-size: 22px;
+      font-weight: 1200;
+      line-height: 1;
+    }
+    .timeBox .lab{
+      margin-top:6px;
+      font-size: 11px;
+      color: rgba(255,255,255,.58);
+      font-weight: 1100;
+      letter-spacing:.25px;
+      text-transform:uppercase;
+    }
+
+    /* Cards */
+    .grid{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap:12px;
+    }
+    @media (max-width: 920px){
+      .grid{grid-template-columns:1fr;}
+    }
+
+    .card{
+      border-radius: var(--r2);
+      background: rgba(0,0,0,.20);
+      border: 1px solid rgba(255,255,255,.10);
+      padding:14px;
+    }
+
+    /* Prize cards */
+    .prizeStack{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .prizeCard{
+      display:grid;
+      grid-template-columns: 1fr 150px;
+      gap:12px;
+      align-items:center;
+      border-radius: var(--r2);
+      background: rgba(0,0,0,.22);
+      border: 1px solid rgba(255,255,255,.10);
+      padding:12px;
+    }
+    @media (max-width: 420px){
+      .prizeCard{grid-template-columns: 1fr 120px;}
+    }
+
+    .badge{
+      width:44px;height:44px;border-radius:18px;
+      display:grid;place-items:center;
+      font-weight:1200;
+      background: rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      flex:0 0 auto;
+    }
+    .badge.one{background: var(--grad); color:#06122a; border-color: rgba(251,201,9,.25)}
+    .badge.two{background: rgba(255,255,255,.18)}
+    .badge.three{background: rgba(251,201,9,.10); border-color: rgba(251,201,9,.18)}
+
+    .row{display:flex;gap:10px;align-items:center}
+    .prizeText b{display:block;font-weight:1200;font-size:15px}
+    .prizeText span{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+
+    .imgBox{
+      width:100%;
+      height:90px;
+      border-radius:18px;
+      overflow:hidden;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.10);
+      display:block;
+    }
+    .imgBox img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    /* Slide 1 text */
+    .heroTitle{
+      font-size: clamp(22px, 5.2vw, 44px);
+      font-weight: 1250;
+      line-height: 1.05;
+      margin: 10px 0 8px;
+    }
+    .tagline{color:var(--muted);font-size:15px;line-height:1.4}
+    .highlight{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 12px;
+      border-radius:18px;
+      background: var(--grad);
+      color:#06122a;
+      font-weight: 1200;
+      box-shadow: 0 14px 40px rgba(0,0,0,.35);
+      margin-top:6px;
+    }
+    .miniGrid{
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap:10px;
+      margin-top:12px;
+    }
+    @media (max-width:520px){ .miniGrid{grid-template-columns:1fr} }
+    .mini{
+      border-radius: 16px;
+      background: rgba(0,0,0,.24);
+      border: 1px solid rgba(255,255,255,.10);
+      padding:12px;
+    }
+    .mini .k{color:rgba(255,255,255,.55);font-size:11px;letter-spacing:.25px;text-transform:uppercase;font-weight:1100}
+    .mini .v{margin-top:6px;font-size:22px;font-weight:1200}
+    .mini .v.gold{color:var(--gold)}
+    .mini .v.teal{color:var(--teal)}
+    .callout{
+      border-radius: var(--r2);
+      background: rgba(251,201,9,.10);
+      border: 1px solid rgba(251,201,9,.20);
+      padding:12px;
+      margin-top:12px;
+      color: rgba(255,255,255,.92);
+    }
+
+    /* Slide 2 rules */
+    .ruleBox{
+      border-radius: var(--r2);
+      background: rgba(0,0,0,.22);
+      border: 1px solid rgba(255,255,255,.10);
+      padding:14px;
+      margin-bottom:10px;
+    }
+    .ruleBox h2{
+      margin:0 0 8px 0;
+      font-size: 16px;
+      letter-spacing:.2px;
+    }
+    .ruleBox ul{
+      margin:0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.4;
+    }
+    .ruleBox li{margin:6px 0}
+    .warn{color: rgba(255,255,255,.92)}
+    .warn b{color:#fff}
+
+    /* Footer controls */
+    .footer{
+      display:grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items:center;
+      gap:10px;
+      margin-top:4px;
+    }
+    .btnRow{display:flex;gap:10px}
+    .btn{
+      height: var(--tap);
+      min-width: 120px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      font-weight: 1200;
+      font-size: 15px;
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn.primary{
+      background: var(--grad);
+      border-color: rgba(251,201,9,.22);
+      color:#06122a;
+    }
+    .btn:active{transform: translateY(1px)}
+    .btn.disabled{opacity:.45;pointer-events:none}
+
+    .dots{display:flex;gap:8px;justify-content:center;align-items:center}
+    .dotNav{
+      width:12px;height:12px;border-radius:999px;
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.14);
+    }
+    .dotNav.on{
+      background: var(--teal);
+      border-color: rgba(58,173,187,.40);
+      box-shadow: 0 0 0 4px rgba(58,173,187,.14);
+    }
+
+    .meta{
+      justify-self:end;
+      color: rgba(255,255,255,.55);
+      font-size: 12px;
+      white-space:nowrap;
+    }
+    @media (max-width:520px){
+      .meta{grid-column: 1 / -1; justify-self:center; text-align:center;}
+    }
+  </style>
 </head>
 
 <body>
-<div class="app">
+  <div class="wrap">
 
-<!-- HEADER -->
-<div class="header">
-  <img src="./logo.jpg" alt="LOS Logo">
-  <div>
-    <h1>31-Day Qualified Sits Challenge</h1>
-    <div class="sub">Starts today at 12:00 PM • Updates every 24 hours</div>
-  </div>
-</div>
+    <!-- HEADER -->
+    <div class="top">
+      <div class="brand">
+        <img class="logo" src="./logo.jpg" alt="LOS Logo"
+             onerror="this.style.display='none'">
+        <div class="title">
+          <h1>31-Day Qualified Sits Challenge</h1>
+          <div class="sub">Starts today at <b>12:00 PM</b> • Updates every <b>24 hours</b></div>
+          <div class="sub" style="margin-top:4px;">Swipe left/right or use buttons →</div>
+        </div>
+      </div>
 
-<!-- SLIDES -->
-<div class="stage">
-<div class="track" id="track">
-
-<!-- SLIDE 1 — PRIZES -->
-<div class="slide">
-  <div class="countdown">
-    <div class="time"><b id="d">–</b><br><span>Days</span></div>
-    <div class="time"><b id="h">–</b><br><span>Hours</span></div>
-    <div class="time"><b id="m">–</b><br><span>Minutes</span></div>
-  </div>
-
-  <div class="prize">
-    <div>
-      <div class="badge">🥇 1st Place</div>
-      <b>$1,000 CASH</b><br>
-      Top Lead Generator
+      <div class="pills">
+        <div class="pill"><span class="dot"></span> 1st: <b>$1,000 Cash</b></div>
+        <div class="pill"><span class="dot teal"></span> 2nd: <b>iPad</b></div>
+        <div class="pill"><span class="dot green"></span> 3rd: <b>Work Polo</b></div>
+      </div>
     </div>
-    <img src="./cash.jpg" alt="Cash Prize">
-  </div>
 
-  <div class="prize">
-    <div>
-      <div class="badge">🥈 2nd Place</div>
-      <b>iPad</b>
+    <!-- MAIN -->
+    <div class="panel" id="panel">
+      <div class="slides" id="slides">
+
+        <!-- SLIDE 1 -->
+        <section class="slide active" id="s0" aria-label="Slide 1">
+          <div class="slideHead">
+            <div class="chip"><span class="miniDot"></span> Slide 1 • Prizes + Countdown</div>
+            <div class="countRow" aria-label="Countdown">
+              <div class="timeBox"><div class="num" id="cd_d">—</div><div class="lab">Days</div></div>
+              <div class="timeBox"><div class="num" id="cd_h">—</div><div class="lab">Hours</div></div>
+              <div class="timeBox"><div class="num" id="cd_m">—</div><div class="lab">Minutes</div></div>
+              <div class="timeBox"><div class="num" id="cd_s">—</div><div class="lab">Seconds</div></div>
+            </div>
+          </div>
+
+          <div class="grid">
+            <div class="card">
+              <div class="highlight">💵 $1,000 STRAIGHT CASH</div>
+              <div class="heroTitle">To the Top Lead Generator</div>
+              <div class="tagline">
+                <b class="warn">Scoring:</b> 1 qualified sit = <b>1.00 point</b><br>
+                <b class="warn">Bill Bonus:</b> bill collected upfront = <b>+0.25</b><br>
+                <b class="warn">Updates:</b> posted every <b>24 hours</b>
+              </div>
+
+              <div class="miniGrid">
+                <div class="mini">
+                  <div class="k">Points per qualified sit</div>
+                  <div class="v gold">1.00</div>
+                </div>
+                <div class="mini">
+                  <div class="k">Bill bonus (upfront)</div>
+                  <div class="v teal">+0.25</div>
+                </div>
+              </div>
+
+              <div class="callout">
+                <b>Team minimum:</b> payout activates only if the team hits <b>40 qualified sits</b> combined.
+              </div>
+            </div>
+
+            <div class="prizeStack">
+              <div class="prizeCard">
+                <div class="row">
+                  <div class="badge one">1st</div>
+                  <div class="prizeText">
+                    <b>$1,000 Cash</b>
+                    <span>Top points wins</span>
+                  </div>
+                </div>
+                <div class="imgBox">
+                  <img src="./cash.jpg" alt="Cash prize"
+                       onerror="this.parentElement.style.display='none'">
+                </div>
+              </div>
+
+              <div class="prizeCard">
+                <div class="row">
+                  <div class="badge two">2nd</div>
+                  <div class="prizeText">
+                    <b>iPad</b>
+                    <span>Runner-up prize</span>
+                  </div>
+                </div>
+                <div class="imgBox">
+                  <img src="./ipad.jpg" alt="iPad prize"
+                       onerror="this.parentElement.style.display='none'">
+                </div>
+              </div>
+
+              <div class="prizeCard">
+                <div class="row">
+                  <div class="badge three">3rd</div>
+                  <div class="prizeText">
+                    <b>Work Polo</b>
+                    <span>3rd place prize</span>
+                  </div>
+                </div>
+                <div class="imgBox">
+                  <img src="./polo.jpg" alt="Work polo prize"
+                       onerror="this.parentElement.style.display='none'">
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SLIDE 2 -->
+        <section class="slide" id="s1" aria-label="Slide 2">
+          <div class="slideHead">
+            <div class="chip"><span class="miniDot"></span> Slide 2 • Rules + Disqualifications</div>
+            <div class="tag">Keep it clean so every point counts</div>
+          </div>
+
+          <div class="ruleBox">
+            <h2>Scoring</h2>
+            <ul>
+              <li><b class="warn">1 qualified sit = 1 point</b></li>
+              <li><b class="warn">Bill collected upfront = +0.25 points</b> (photo/digital bill tied to the sit)</li>
+              <li><b class="warn">Tie breaker:</b> if points tie, winner is the rep with <b>more sits converted to sales</b></li>
+            </ul>
+          </div>
+
+          <div class="ruleBox">
+            <h2>Qualification (must meet one)</h2>
+            <ul>
+              <li><b class="warn">Add-on appointment:</b> annual bill <b>$1,750+</b></li>
+              <li><b class="warn">Non-solar home:</b> monthly bill <b>$140+</b></li>
+            </ul>
+          </div>
+
+          <div class="ruleBox">
+            <h2>Requirements (or it doesn’t count)</h2>
+            <ul>
+              <li><b class="warn">Qualified sits + appointments only</b> (no fluff)</li>
+              <li><b class="warn">All sits must be marked in Enzy</b></li>
+              <li><b class="warn">Must use Enzy on doors at all times</b></li>
+            </ul>
+          </div>
+
+          <div class="ruleBox">
+            <h2>Disqualifications</h2>
+            <ul>
+              <li><b class="warn">Renters are disqualified</b> and do not count</li>
+              <li><b class="warn">Homes with not enough roof space</b> do not count</li>
+              <li>Anything not logged properly in Enzy = <b class="warn">0 points</b></li>
+            </ul>
+          </div>
+
+          <div class="ruleBox">
+            <h2>Team Minimum</h2>
+            <ul>
+              <li>Payout activates only if the team hits <b class="warn">40 qualified sits</b> combined</li>
+              <li>Updates posted every <b class="warn">24 hours</b></li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SLIDE 3 -->
+        <section class="slide" id="s2" aria-label="Slide 3">
+          <div class="slideHead">
+            <div class="chip"><span class="miniDot"></span> Slide 3 • Updates</div>
+            <div class="tag">Updates every 24 hours</div>
+          </div>
+
+          <div class="ruleBox">
+            <h2>Daily Update Template</h2>
+            <ul>
+              <li>Team Qualified Sits: <b class="warn">___ / 40</b></li>
+              <li>1st: __________________ (Points: ____)</li>
+              <li>2nd: __________________ (Points: ____)</li>
+              <li>3rd: __________________ (Points: ____)</li>
+            </ul>
+          </div>
+
+          <div class="ruleBox">
+            <h2>Leaderboard</h2>
+            <ul>
+              <li>We’ll add the leaderboard next (manual first, Supabase later).</li>
+            </ul>
+          </div>
+        </section>
+
+      </div>
     </div>
-    <img src="./ipad.jpg" alt="iPad Prize">
-  </div>
 
-  <div class="prize">
-    <div>
-      <div class="badge">🥉 3rd Place</div>
-      <b>Work Polo</b>
+    <!-- FOOTER NAV -->
+    <div class="footer">
+      <div class="btnRow">
+        <button class="btn" id="prevBtn" type="button">← Prev</button>
+      </div>
+
+      <div class="dots" aria-label="Slide dots">
+        <div class="dotNav on" id="dot0"></div>
+        <div class="dotNav" id="dot1"></div>
+        <div class="dotNav" id="dot2"></div>
+      </div>
+
+      <div class="btnRow" style="justify-content:flex-end">
+        <button class="btn primary" id="nextBtn" type="button">Next →</button>
+      </div>
+
+      <div class="meta" id="meta">Slide 1 of 3</div>
     </div>
-    <img src="./polo.jpg" alt="Work Polo Prize">
+
   </div>
-</div>
-
-<!-- SLIDE 2 — RULES -->
-<div class="slide">
-  <div class="rule">
-    <b>Scoring</b>
-    • 1 qualified sit = 1 point<br>
-    • Bill collected upfront = +0.25 points
-  </div>
-
-  <div class="rule">
-    <b>Bill Qualifications</b>
-    • Add-on appointment: $1,750+ annual bill<br>
-    • Non-solar home: $140+ monthly bill
-  </div>
-
-  <div class="rule">
-    <b>Requirements</b>
-    • Homeowner only (no renters)<br>
-    • Must have viable roof space<br>
-    • Sit must be logged in Enzy
-  </div>
-
-  <div class="rule">
-    <b>Disqualified</b>
-    • Renters<br>
-    • Not enough roof space<br>
-    • Not logged in Enzy
-  </div>
-
-  <div class="rule">
-    <b>Team Minimum</b>
-    Competition pays out only if team reaches 40 qualified sits
-  </div>
-
-  <div class="rule">
-    <b>Tie Breaker</b>
-    Most sits converted to sales wins
-  </div>
-</div>
-
-<!-- SLIDE 3 — UPDATES -->
-<div class="slide">
-  <div class="rule">
-    <b>Daily Updates</b>
-    Updates posted every 24 hours
-  </div>
-
-  <div class="rule">
-    <b>Leaderboard</b>
-    Coming soon — manual updates until live leaderboard is added
-  </div>
-</div>
-
-</div>
-</div>
-
-<!-- CONTROLS -->
-<div class="controls">
-  <button class="secondary" onclick="nav(-1)">← Prev</button>
-  <button onclick="nav(1)">Next →</button>
-</div>
-
-</div>
 
 <script>
-let idx=0;
-function nav(n){
-  idx=Math.max(0,Math.min(2,idx+n));
-  document.getElementById("track").style.transform=
-    `translateX(-${idx*100}%)`;
-}
+  // =========================
+  // Slides (show/hide) – reliable on iOS Safari
+  // =========================
+  const slides = [document.getElementById('s0'), document.getElementById('s1'), document.getElementById('s2')];
+  const dots   = [document.getElementById('dot0'), document.getElementById('dot1'), document.getElementById('dot2')];
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const meta = document.getElementById('meta');
 
-/* COUNTDOWN — 31 days from today at 12 PM */
-const now=new Date();
-const start=new Date(now.getFullYear(),now.getMonth(),now.getDate(),12,0,0);
-const realStart= now>start ? now : start;
-const end=new Date(realStart.getTime()+31*24*60*60*1000);
+  let idx = 0;
 
-function tick(){
-  const ms=end-new Date();
-  const mins=Math.floor(ms/60000);
-  document.getElementById("d").textContent=Math.max(0,Math.floor(mins/1440));
-  document.getElementById("h").textContent=Math.max(0,Math.floor((mins%1440)/60));
-  document.getElementById("m").textContent=Math.max(0,mins%60);
-}
-tick();
-setInterval(tick,60000);
+  function setSlide(n){
+    idx = Math.max(0, Math.min(2, n));
+    slides.forEach((s,i)=> s.classList.toggle('active', i===idx));
+    dots.forEach((d,i)=> d.classList.toggle('on', i===idx));
+    meta.textContent = `Slide ${idx+1} of 3`;
+
+    prevBtn.classList.toggle('disabled', idx===0);
+    nextBtn.classList.toggle('disabled', idx===2);
+
+    // always scroll to top when changing slides
+    slides[idx].scrollTo(0,0);
+  }
+
+  prevBtn.addEventListener('click', ()=> setSlide(idx-1));
+  nextBtn.addEventListener('click', ()=> setSlide(idx+1));
+
+  // Swipe
+  const panel = document.getElementById('panel');
+  let sx=0, sy=0, swiping=false;
+
+  panel.addEventListener('touchstart', (e)=>{
+    const t = e.touches[0];
+    sx = t.clientX; sy = t.clientY;
+    swiping = true;
+  }, {passive:true});
+
+  panel.addEventListener('touchend', (e)=>{
+    if(!swiping) return;
+    swiping = false;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - sx;
+    const dy = t.clientY - sy;
+
+    if(Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)){
+      if(dx < 0) setSlide(idx+1);
+      if(dx > 0) setSlide(idx-1);
+    }
+  }, {passive:true});
+
+  // Keyboard
+  window.addEventListener('keydown', (e)=>{
+    if(e.key === 'ArrowLeft') setSlide(idx-1);
+    if(e.key === 'ArrowRight') setSlide(idx+1);
+  });
+
+  setSlide(0);
+
+  // =========================
+  // Countdown (includes seconds)
+  // Starts today at 12:00 PM local
+  // Ends 31 days later at 12:00 PM local
+  // =========================
+  const cdD = document.getElementById('cd_d');
+  const cdH = document.getElementById('cd_h');
+  const cdM = document.getElementById('cd_m');
+  const cdS = document.getElementById('cd_s');
+
+  const now = new Date();
+  const start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0);
+  const end = new Date(start.getTime() + 31 * 24 * 60 * 60 * 1000);
+
+  const pad2 = (n)=> String(n).padStart(2,'0');
+
+  function tick(){
+    const t = new Date();
+    let ms = end - t;
+    if(ms < 0) ms = 0;
+
+    const totalSec = Math.floor(ms / 1000);
+    const days = Math.floor(totalSec / 86400);
+    const hrs  = Math.floor((totalSec % 86400) / 3600);
+    const mins = Math.floor((totalSec % 3600) / 60);
+    const secs = totalSec % 60;
+
+    cdD.textContent = String(days);
+    cdH.textContent = pad2(hrs);
+    cdM.textContent = pad2(mins);
+    cdS.textContent = pad2(secs);
+  }
+
+  tick();
+  setInterval(tick, 1000);
 </script>
 
 </body>
